@@ -263,3 +263,5 @@ __pycache__/
 *.vscode
 
 .DS_Store
+
+!.git/hooks/pre-commit
