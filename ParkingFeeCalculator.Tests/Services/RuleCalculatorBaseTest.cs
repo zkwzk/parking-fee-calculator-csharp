@@ -34,7 +34,7 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldFitResultStartTimeBeActualStartTimeIfActualStartTimeIsGreaterThanRuleStartTime()
+        public void ShouldFitResultStartTimeBeActualStartTimeIfActualStartTimeIsAfterRuleStartTime()
         {
             var ruleStartTime = new TimeOnly(10, 0);
             var ruleEndTime = new TimeOnly(12, 0);
@@ -47,7 +47,7 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldFitResultEndTimeBeActualEndTimeIfActualEndTimeIsLessThanRuleEndTime()
+        public void ShouldFitResultEndTimeBeActualEndTimeIfActualEndTimeIsBeforeThanRuleEndTime()
         {
             var ruleStartTime = new TimeOnly(10, 0);
             var ruleEndTime = new TimeOnly(12, 0);
@@ -60,17 +60,22 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldFitResultBeEntireRuleTimeRangeIfActualTimeRangeIsCoverRuleTimeRange()
-        {
+        public void ShouldReturnFalseIfTheActualStartTimeIsAfterTheRuleEndTime() {
             var ruleStartTime = new TimeOnly(10, 0);
             var ruleEndTime = new TimeOnly(12, 0);
-            var actualStartTime = new DateTime(2024, 3, 20, 9, 0, 0);
-            
-            var actualEndTime = new DateTime(2024, 3, 20, 12, 0, 1);
+            var actualStartTime = new DateTime(2024, 3, 20, 13, 0, 0);
+            var actualEndTime = new DateTime(2024, 3, 20, 13, 30, 0, 0);
             var feeCalculatorBase = new RuleCalculatorBase(ruleStartTime, ruleEndTime);
             var result = feeCalculatorBase.IsFit(actualStartTime, actualEndTime);
-            Assert.Equal(ruleStartTime, result.StartTime);
-            Assert.Equal(ruleEndTime, result.EndTime);
+            Assert.False(result.IsFit); 
+        }
+
+        [Fact]
+        public void ShouldThrowNotImplementExceptionWhenCalculateCostIsCalled()
+        {
+            var feeCalculatorBase = new RuleCalculatorBase(new TimeOnly(10, 0), new TimeOnly(12, 0));
+            var result = feeCalculatorBase.IsFit(new DateTime(2024, 3, 20, 11, 0, 0), new DateTime(2024, 3, 20, 11, 30, 0, 0));
+            Assert.Throws<NotImplementedException>(() => feeCalculatorBase.CalculateCost(result));
         }
     }
 }
