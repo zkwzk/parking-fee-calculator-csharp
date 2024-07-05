@@ -1,12 +1,12 @@
-using System;
 using ParkingFeeCalculator.Models;
 using ParkingFeeCalculator.Utilities;
+
 namespace ParkingFeeCalculator.Services
 {
     public class RuleCalculatorBase
     {
-        public TimeOnly StartTime { get; set; }
-        public TimeOnly EndTime { get; set; }
+        public TimeOnly StartTime { get; private set; }
+        public TimeOnly EndTime { get; private set; }
 
         public RuleCalculatorBase(TimeOnly startTime, TimeOnly endTime)
         {
@@ -18,8 +18,8 @@ namespace ParkingFeeCalculator.Services
         {
             var actualStartTime = startTime.ToTimeOnly();
             var actualEndTime = endTime.ToTimeOnly();
-            if ((actualStartTime < this.StartTime && actualEndTime < this.StartTime) ||
-            (actualEndTime > this.EndTime && actualStartTime > this.EndTime))
+            if (actualStartTime < this.StartTime && actualEndTime < this.StartTime ||
+                actualEndTime > this.EndTime && actualStartTime > this.EndTime)
             {
                 return new FitResult { IsFit = false };
             }

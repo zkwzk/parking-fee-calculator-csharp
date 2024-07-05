@@ -5,13 +5,13 @@ namespace ParkingFeeCalculator.Services.FeeRuleCalculators
 {
     public class FixedFeePerXMinutesRuleCalculator : RuleCalculatorBase
     {
-        private readonly int _minutes;
-        private readonly decimal _fee;
+        public int XMinutes { get; private set; }
+        public decimal XMinutesFee { get; private set; }
 
-        public FixedFeePerXMinutesRuleCalculator(TimeOnly startTime, TimeOnly endTime, int minutes, decimal fee) : base(startTime, endTime)
+        public FixedFeePerXMinutesRuleCalculator(TimeOnly startTime, TimeOnly endTime, int xMinutes, decimal xMinutesFee) : base(startTime, endTime)
         {
-            _minutes = minutes;
-            _fee = fee;
+            this.XMinutes = xMinutes;
+            this.XMinutesFee = xMinutesFee;
         }
 
         public override decimal CalculateCost(FitResult fitResult)
@@ -23,12 +23,12 @@ namespace ParkingFeeCalculator.Services.FeeRuleCalculators
 
             if (fitResult.StartTime == fitResult.EndTime)
             {
-                return _fee;
+                return this.XMinutesFee;
             }
 
-            var duration = (fitResult.EndTime - fitResult.StartTime).TotalMinutes;
-            var timeCeil = Math.Ceiling(duration / _minutes);
-            return (_fee * (decimal)timeCeil).To2DecimalPlaces();
+            var totalMinutes = (fitResult.EndTime - fitResult.StartTime).TotalMinutes;
+            var chargeableXMinutes = Math.Ceiling(totalMinutes / this.XMinutes);
+            return (this.XMinutesFee * (decimal)chargeableXMinutes).ToTwoDecimalPlaces();
         }
     }
 }

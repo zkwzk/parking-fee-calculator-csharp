@@ -4,21 +4,25 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
 {
     public class FixedFeePerXMinutesRuleCalculatorTest
     {
-
-        FixedFeePerXMinutesRuleCalculator feeCalculator = new FixedFeePerXMinutesRuleCalculator(new TimeOnly(10, 0), new TimeOnly(16, 0), 15, 0.5m);
+        static TimeOnly ruleStartTime = new TimeOnly(10, 0);
+        static TimeOnly ruleEndTime = new TimeOnly(16, 0);
+        static int ruleXMinutes = 15;
+        static decimal ruleXMinutesFee = 0.5m;
+        
+        FixedFeePerXMinutesRuleCalculator feeCalculator = new FixedFeePerXMinutesRuleCalculator(ruleStartTime, ruleEndTime, ruleXMinutes, ruleXMinutesFee);
 
         [Fact]
-        public void ShouldReturn2For60Minutes()
+        public void ShouldReturnXMinutesFeeIfActualTimeRangeWithinRuleTimeRange()
         {
             var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
             var actualEndTime = new DateTime(2024, 3, 20, 11, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
-            Assert.Equal(2, feeCalculator.CalculateCost(result));
+            Assert.Equal(ruleXMinutesFee * 4m, feeCalculator.CalculateCost(result));
         }
 
         [Fact]
-        public void ShouldReturn0IfNotFitForCalculateCost()
+        public void ShouldReturnZeroIfActualTimeRangeBeforeRuleTimeRange()
         {
             var actualStartTime = new DateTime(2024, 3, 20, 9, 0, 0);
             var actualEndTime = new DateTime(2024, 3, 20, 9, 30, 0, 0);
@@ -28,33 +32,43 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         }
 
         [Fact]
-        public void ShouldReturn12From10To16()
-        {
-            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 16, 0, 0);
-            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
-            Assert.True(result.IsFit);
-            Assert.Equal(12, feeCalculator.CalculateCost(result));
-        }
-
-        [Fact]
-        public void ShouldReturnBaseFeeForSameStartTimeAndEndTime()
+        public void ShouldReturnXMinutesFeeIfActualStartTimeAndActualEndTimeAreSame()
         {
             var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
             var actualEndTime = new DateTime(2024, 3, 20, 10, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
-            Assert.Equal(0.5m, feeCalculator.CalculateCost(result));
+            Assert.Equal(ruleXMinutesFee, feeCalculator.CalculateCost(result));
         }
 
         [Fact]
-        public void ShouldReturn12For10To17()
+        public void ShouldReturnRoundedXMinutesFeeIfActualTimeRangeExceedsRuleTimeRangeByOneMinute()
+        {
+            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
+            var actualEndTime = new DateTime(2024, 3, 20, 10, 16, 0);
+            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
+            Assert.True(result.IsFit);
+            Assert.Equal(ruleXMinutesFee * 2m, feeCalculator.CalculateCost(result));
+        }
+
+        [Fact]
+        public void ShouldReturnXMinutesFeeIfActualTimeRangeExactlyMatchesRuleTimeRange()
+        {
+            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
+            var actualEndTime = new DateTime(2024, 3, 20, 16, 0, 0);
+            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
+            Assert.True(result.IsFit);
+            Assert.Equal(ruleXMinutesFee * 24m, feeCalculator.CalculateCost(result));
+        }
+
+        [Fact]
+        public void ShouldReturnXMinutesFeeIfActualTimeRangeExceedsRuleTimeRange()
         {
             var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
             var actualEndTime = new DateTime(2024, 3, 20, 17, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
-            Assert.Equal(12, feeCalculator.CalculateCost(result));
+            Assert.Equal(ruleXMinutesFee * 24m, feeCalculator.CalculateCost(result));
         }
     }
 }
