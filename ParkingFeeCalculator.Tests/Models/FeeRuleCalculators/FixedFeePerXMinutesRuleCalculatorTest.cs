@@ -1,6 +1,6 @@
-using ParkingFeeCalculator.Services.FeeRuleCalculators;
+using ParkingFeeCalculator.Models.FeeRuleCalculators;
 
-namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
+namespace ParkingFeeCalculator.Tests.Models.FeeRuleCalculators
 {
     public class FixedFeePerXMinutesRuleCalculatorTest
     {

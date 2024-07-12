@@ -1,4 +1,3 @@
-
 namespace ParkingFeeCalculator.Models
 {
     public class CarParkFee

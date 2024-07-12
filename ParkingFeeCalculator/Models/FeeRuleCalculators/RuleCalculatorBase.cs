@@ -1,7 +1,4 @@
-using ParkingFeeCalculator.Models;
-using ParkingFeeCalculator.Utilities;
-
-namespace ParkingFeeCalculator.Services
+namespace ParkingFeeCalculator.Models.FeeRuleCalculators
 {
     public class RuleCalculatorBase
     {

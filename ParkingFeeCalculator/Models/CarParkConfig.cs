@@ -1,5 +1,4 @@
-using ParkingFeeCalculator.Services;
-using ParkingFeeCalculator.Services.FeeRuleCalculators;
+using ParkingFeeCalculator.Models.FeeRuleCalculators;
 
 namespace ParkingFeeCalculator.Models
 {
