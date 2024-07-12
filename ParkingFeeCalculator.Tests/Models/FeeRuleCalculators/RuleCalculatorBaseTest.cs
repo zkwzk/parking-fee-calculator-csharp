@@ -20,43 +20,8 @@ namespace ParkingFeeCalculator.Tests.Models.FeeRuleCalculators
             Assert.Equal(actualEndTime, result.EndTime);
         }
 
-        [Fact]
-        public void ShouldReturnFalseIfActualTimeRangeOutsideRuleTimeRange()
-        {
-            var actualStartTime = new TimeOnly(9, 0);
-            var actualEndTime = new TimeOnly(9, 30);
-            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
-            Assert.False(result.IsFit);
-        }
-
-        [Fact]
-        public void ShouldFitResultStartTimeBeActualStartTimeIfActualStartTimeIsAfterRuleStartTime()
-        {
-            var actualStartTime = new TimeOnly(11, 0);
-            var actualEndTime = new TimeOnly(13, 30);
-            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
-            Assert.Equal(actualStartTime, result.StartTime);
-            Assert.Equal(ruleEndTime, result.EndTime);
-        }
-
-        [Fact]
-        public void ShouldFitResultEndTimeBeActualEndTimeIfActualEndTimeIsBeforeRuleEndTime()
-        {
-            var actualStartTime = new TimeOnly(9, 0);
-            var actualEndTime = new TimeOnly(11, 30);
-            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
-            Assert.Equal(ruleStartTime, result.StartTime);
-            Assert.Equal(actualEndTime, result.EndTime);
-        }
-
-        [Fact]
-        public void ShouldReturnFalseIfTheActualStartTimeIsAfterRuleEndTime()
-        {
-            var actualStartTime = new TimeOnly(13, 0);
-            var actualEndTime = new TimeOnly(13, 30);
-            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
-            Assert.False(result.IsFit);
-        }
+        // task #2
+        // TODO: implement more test cases for the isFit method
 
         [Fact]
         public void ShouldThrowNotImplementExceptionWhenCalculateCostIsCalled()

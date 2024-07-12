@@ -13,17 +13,9 @@ namespace ParkingFeeCalculator.Models.FeeRuleCalculators
 
         public FitResult IsFit(TimeOnly startTime, TimeOnly endTime)
         {
-            var actualStartTime = startTime;
-            var actualEndTime = endTime;
-            if (actualStartTime < this.StartTime && actualEndTime < this.StartTime ||
-                actualEndTime > this.EndTime && actualStartTime > this.EndTime)
-            {
-                return new FitResult(false);
-            }
-
-            return new FitResult(actualStartTime > this.StartTime ? actualStartTime : this.StartTime,
-                                 actualEndTime < this.EndTime ? actualEndTime : this.EndTime,
-                                 true);
+            // task #2
+            // TODO: Implement the isFit method
+            return new FitResult(false);
         }
 
         public virtual decimal CalculateCost(FitResult fitResult)
