@@ -1,5 +1,8 @@
-public enum VehicleType
+namespace ParkingFeeCalculator.Models
 {
-    Car = 0,
-    Motorcycle = 1
+    public enum VehicleType
+    {
+        Car = 0,
+        Motorcycle = 1
+    }
 }

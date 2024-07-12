@@ -3,7 +3,7 @@ using ParkingFeeCalculator.Utilities;
 
 namespace ParkingFeeCalculator.Services
 {
-    public class FeeCalculatorService
+    public class FeeCalculatorService : IFeeCalculatorService
     {
         public bool CheckIsWeekend(DateTime date)
         {
