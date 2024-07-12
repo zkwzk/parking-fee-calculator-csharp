@@ -14,8 +14,8 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         [Fact]
         public void ShouldReturnXMinutesFeeIfActualTimeRangeWithinRuleTimeRange()
         {
-            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 11, 0, 0);
+            var actualStartTime = new TimeOnly(10, 0, 0);
+            var actualEndTime = new TimeOnly(11, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
             Assert.Equal(ruleXMinutesFee * 4m, feeCalculator.CalculateCost(result));
@@ -24,8 +24,8 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         [Fact]
         public void ShouldReturnZeroIfActualTimeRangeBeforeRuleTimeRange()
         {
-            var actualStartTime = new DateTime(2024, 3, 20, 9, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 9, 30, 0, 0);
+            var actualStartTime = new TimeOnly(9, 0, 0);
+            var actualEndTime = new TimeOnly(9, 30, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.False(result.IsFit);
             Assert.Equal(0, feeCalculator.CalculateCost(result));
@@ -34,8 +34,8 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         [Fact]
         public void ShouldReturnXMinutesFeeIfActualStartTimeAndActualEndTimeAreSame()
         {
-            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 10, 0, 0);
+            var actualStartTime = new TimeOnly(10, 0, 0);
+            var actualEndTime = new TimeOnly(10, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
             Assert.Equal(ruleXMinutesFee, feeCalculator.CalculateCost(result));
@@ -44,8 +44,8 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         [Fact]
         public void ShouldReturnRoundedXMinutesFeeIfActualTimeRangeExceedsRuleTimeRangeByOneMinute()
         {
-            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 10, 16, 0);
+            var actualStartTime = new TimeOnly(10, 0, 0);
+            var actualEndTime = new TimeOnly(10, 16, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
             Assert.Equal(ruleXMinutesFee * 2m, feeCalculator.CalculateCost(result));
@@ -54,8 +54,8 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         [Fact]
         public void ShouldReturnXMinutesFeeIfActualTimeRangeExactlyMatchesRuleTimeRange()
         {
-            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 16, 0, 0);
+            var actualStartTime = new TimeOnly(10, 0, 0);
+            var actualEndTime = new TimeOnly(16, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
             Assert.Equal(ruleXMinutesFee * 24m, feeCalculator.CalculateCost(result));
@@ -64,8 +64,8 @@ namespace ParkingFeeCalculator.Tests.Services.FeeRuleCalculators
         [Fact]
         public void ShouldReturnXMinutesFeeIfActualTimeRangeExceedsRuleTimeRange()
         {
-            var actualStartTime = new DateTime(2024, 3, 20, 10, 0, 0);
-            var actualEndTime = new DateTime(2024, 3, 20, 17, 0, 0);
+            var actualStartTime = new TimeOnly(10, 0, 0);
+            var actualEndTime = new TimeOnly(17, 0, 0);
             var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
             Assert.True(result.IsFit);
             Assert.Equal(ruleXMinutesFee * 24m, feeCalculator.CalculateCost(result));

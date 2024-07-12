@@ -14,10 +14,10 @@ namespace ParkingFeeCalculator.Services
             this.EndTime = endTime;
         }
 
-        public FitResult IsFit(DateTime startTime, DateTime endTime)
+        public FitResult IsFit(TimeOnly startTime, TimeOnly endTime)
         {
-            var actualStartTime = startTime.ToTimeOnly();
-            var actualEndTime = endTime.ToTimeOnly();
+            var actualStartTime = startTime;
+            var actualEndTime = endTime;
             if (actualStartTime < this.StartTime && actualEndTime < this.StartTime ||
                 actualEndTime > this.EndTime && actualStartTime > this.EndTime)
             {
