@@ -3,9 +3,9 @@ using ParkingFeeCalculator.Services;
 
 namespace ParkingFeeCalculator.Tests.Services
 {
-    public class FeeCalculatorServiceTest
+    public class FeeCalculationServiceTest
     {
-        private FeeCalculatorService _service  = new FeeCalculatorService();
+        private FeeCalculationService _service  = new FeeCalculationService();
 
         [Fact]
         public void ShouldReturnTrueIfItsSaturday()

@@ -1,9 +1,6 @@
-// generate a controller with the name FeeCalculatorController
-
 using Microsoft.AspNetCore.Mvc;
 using ParkingFeeCalculator.Models;
 using ParkingFeeCalculator.Services;
-using System;
 
 namespace ParkingFeeCalculator.Controllers
 {
@@ -11,9 +8,9 @@ namespace ParkingFeeCalculator.Controllers
     [ApiController]
     public class FeeCalculatorController : ControllerBase
     {
-        private readonly IFeeCalculatorService _service;
+        private readonly IFeeCalculationService _service;
 
-        public FeeCalculatorController(IFeeCalculatorService service)
+        public FeeCalculatorController(IFeeCalculationService service)
         {
             _service = service;
         }
