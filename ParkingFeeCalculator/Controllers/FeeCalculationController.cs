@@ -6,11 +6,11 @@ namespace ParkingFeeCalculator.Controllers
 {
     [Route("api/feeCalculator")]
     [ApiController]
-    public class FeeCalculatorController : ControllerBase
+    public class FeeCalculationController : ControllerBase
     {
         private readonly IFeeCalculationService _service;
 
-        public FeeCalculatorController(IFeeCalculationService service)
+        public FeeCalculationController(IFeeCalculationService service)
         {
             _service = service;
         }
