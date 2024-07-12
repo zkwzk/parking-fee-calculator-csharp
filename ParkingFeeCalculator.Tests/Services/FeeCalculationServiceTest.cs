@@ -137,75 +137,7 @@ namespace ParkingFeeCalculator.Tests.Services
             Assert.Equal(1.95m, result);
         }
 
-        [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfIts2Hours()
-        {
-            var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
-            var endTime = new DateTime(2021, 1, 1, 12, 0, 0);
-            var carPark = CarParkConfig.PlazaSingapuraCarPark;
-            var result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, carPark);
-            Assert.Equal(4.15m, result);
-        }
-
-        [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsOneWeekdayAndOneWeekend()
-        {
-            /*
-                10-1100: 1.95
-                1100-17:59: 7*4*0.55 = 15.40
-                18-23:59: 3.25
-
-                12-0259: 3*4*0.55 = 6.60
-                3-500: 3.25
-                501-1100: 6*4*0.55 = 13.2
-
-                total: 1.95 + 15.40 + 3.25 + 6.60 + 3.25 + 13.2 = 43.65
-            */
-            var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
-            var endTime = new DateTime(2021, 1, 2, 11, 0, 0);
-            var carPark = CarParkConfig.PlazaSingapuraCarPark;
-            var result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, carPark);
-            Assert.Equal(43.65m, result);
-        }
-
-        [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsOneWeekdayAndTwoWeekend()
-        {
-            var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
-            var endTime = new DateTime(2021, 1, 3, 12, 0, 0);
-            var carPark = CarParkConfig.PlazaSingapuraCarPark;
-            var result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, carPark);
-            Assert.Equal(87.55m, result);
-        }
-
-        [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeForMotorcycle()
-        {
-            var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
-            var endTime = new DateTime(2021, 1, 1, 12, 0, 0);
-            var carPark = CarParkConfig.PlazaSingapuraCarPark;
-            var result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Motorcycle, carPark);
-            Assert.Equal(1.3m, result);
-        }
-
-        [Fact]
-        public void PlazaSingapuraShouldBeTheLowest()
-        {
-            var startTime = new DateTime(2021, 1, 1, 0, 0, 0);
-            var endTime = new DateTime(2021, 1, 1, 23, 59, 0);
-            var expectedFeeForPlazaSingapura = 42.6m;
-            var result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, CarParkConfig.PlazaSingapuraCarPark);
-            Assert.Equal(expectedFeeForPlazaSingapura, result);
-
-            var expectedFeeForOrchardCentral = 53.06m;
-            result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, CarParkConfig.OrchardCentralCarPark);
-            Assert.Equal(expectedFeeForOrchardCentral, result);
-
-            var expecteFeeForTSC = 58.46m;
-            result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, CarParkConfig.TSCCarPark);
-            Assert.Equal(expecteFeeForTSC, result);
-            Assert.True(expectedFeeForPlazaSingapura < expectedFeeForOrchardCentral);
-            Assert.True(expectedFeeForPlazaSingapura < expecteFeeForTSC);
-        }
+        // task #3
+        // TODO: implement more test cases for the CalculateParkingFee method
     }
 }

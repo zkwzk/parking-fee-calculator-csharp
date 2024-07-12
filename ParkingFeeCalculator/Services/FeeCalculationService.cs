@@ -47,43 +47,10 @@ namespace ParkingFeeCalculator.Services
 
         public decimal CalculateParkingFee(DateTime startTime, DateTime endTime, VehicleType vehicleType, CarPark carPark)
         {
-            var result = 0m;
-            if (CheckGracePeriod(startTime, endTime, carPark.GracePeriodInMinutes))
-            {
-                return result;
-            }
-
-            var calculateDaysResult = CalculateDays(startTime, endTime);
-
-            foreach (var dayResult in calculateDaysResult)
-            {
-                if (vehicleType == VehicleType.Motorcycle)
-                {
-                    foreach (var ruleCalculator in carPark.MotorCycleFeeRuleCalculators)
-                    {
-                        var fitResult = ruleCalculator.IsFit(dayResult.DayStartTime, dayResult.DayEndTime);
-                        if (fitResult.IsFit)
-                        {
-                            result += ruleCalculator.CalculateCost(fitResult);
-                        }
-                    }
-                }
-                else
-                {
-                    var ruleCalculators = dayResult.IsWeekend ? carPark.CarWeekendFeeRuleCalculators : carPark.CarWeekdayFeeRuleCalculators;
-
-                    foreach (var ruleCalculator in ruleCalculators)
-                    {
-                        var fitResult = ruleCalculator.IsFit(dayResult.DayStartTime, dayResult.DayEndTime);
-                        if (fitResult.IsFit)
-                        {
-                            result += ruleCalculator.CalculateCost(fitResult);
-                        }
-                    }
-                }
-            }
-
-            return result;
+            decimal result = 0m;
+            //#task 3
+            //TODO: Implement the logic to calculate the parking fee
+            return result.ToTwoDecimalPlaces();
         }
     }
 }
