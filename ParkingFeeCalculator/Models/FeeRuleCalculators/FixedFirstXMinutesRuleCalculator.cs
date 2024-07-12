@@ -19,26 +19,10 @@ namespace ParkingFeeCalculator.Models.FeeRuleCalculators
 
         public override decimal CalculateCost(FitResult fitResult)
         {
-            if (!fitResult.IsFit)
-            {
-                return 0;
-            }
-
-            if (fitResult.StartTime == fitResult.EndTime)
-            {
-                return this.FirstXMinutesFee;
-            }
-
-            var totalMinutes = (fitResult.EndTime - fitResult.StartTime).TotalMinutes;
-
-            if (totalMinutes <= this.XMinutes)
-            {
-                return FirstXMinutesFee;
-            }
-
-            var durationAfterXMinutes = totalMinutes - this.XMinutes;
-            var chargeableYMinutes = Math.Ceiling(durationAfterXMinutes / this.YMinutes);
-            return (this.FirstXMinutesFee + (this.SubsequenceYMinutesFee * (decimal)chargeableYMinutes)).ToTwoDecimalPlaces();
+            // task #1
+            // TODO: implement the calculateCost method
+            var result = 0m;
+            return result.ToTwoDecimalPlaces();
         }
     }
 }
