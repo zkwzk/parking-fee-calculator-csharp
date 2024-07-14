@@ -5,7 +5,7 @@ namespace ParkingFeeCalculator.Tests.Services
 {
     public class FeeCalculationServiceTest
     {
-        private FeeCalculationService _service  = new FeeCalculationService();
+        private FeeCalculationService _service = new FeeCalculationService();
 
         [Fact]
         public void ShouldReturnTrueIfItsSaturday()
@@ -16,7 +16,7 @@ namespace ParkingFeeCalculator.Tests.Services
 
         }
 
-        [Fact]  
+        [Fact]
         public void ShouldReturnTrueIfItsSunday()
         {
             var date = new DateTime(2024, 7, 14); // Sunday
@@ -73,7 +73,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturnTrueIfItsSameDay() {
+        public void ShouldReturnTrueIfItsSameDay()
+        {
             var startTime = new DateTime(2024, 7, 12, 10, 0, 0);
             var endTime = new DateTime(2024, 7, 12, 10, 10, 0);
             var result = _service.CheckIsSameDay(startTime, endTime);
@@ -81,7 +82,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturnFalseIfNotSameDay() {
+        public void ShouldReturnFalseIfNotSameDay()
+        {
             var startTime = new DateTime(2024, 7, 12, 23, 50, 0);
             var endTime = new DateTime(2024, 7, 13, 0, 0, 0);
             var result = _service.CheckIsSameDay(startTime, endTime);
@@ -89,7 +91,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturn2ItemsInTheResultForCalculateDaysIfItsAcrossDays() {
+        public void ShouldReturnTwoItemsInTheResultForCalculateDaysIfItsAcrossDays()
+        {
             var startTime = new DateTime(2024, 7, 12, 10, 0, 0);
             var endTime = new DateTime(2024, 7, 13, 10, 0, 0);
             var result = _service.CalculateDays(startTime, endTime);
@@ -102,28 +105,31 @@ namespace ParkingFeeCalculator.Tests.Services
             Assert.True(result[1].IsWeekend);
         }
 
-         [Fact]
-        public void ShouldReturn1ItemsInTheResultForCalculateDaysIfItsSameDay() {
+        [Fact]
+        public void ShouldReturnOneItemInTheResultForCalculateDaysIfItsSameDay()
+        {
             var startTime = new DateTime(2024, 7, 12, 10, 0, 0);
             var endTime = new DateTime(2024, 7, 12, 16, 0, 0);
             var result = _service.CalculateDays(startTime, endTime);
             Assert.Single(result);
             Assert.Equal(new TimeOnly(10, 0), result[0].DayStartTime);
-            Assert.Equal(new TimeOnly(16, 00), result[0].DayEndTime);
+            Assert.Equal(new TimeOnly(16, 0), result[0].DayEndTime);
             Assert.False(result[0].IsWeekend);
         }
 
         [Fact]
-        public void ShouldReturn0IfItsWithinGracePeriod() {
+        public void ShouldReturnZeroIfItsWithinGracePeriod()
+        {
             var startTime = new DateTime(2024, 7, 12, 10, 0, 0);
             var endTime = new DateTime(2024, 7, 12, 10, 10, 0);
             var carPark = CarParkConfig.PlazaSingapuraCarPark;
             var result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, carPark);
-            Assert.Equal(0, result);
+            Assert.Equal(0m, result);
         }
 
         [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsSameDay() {
+        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsSameDay()
+        {
             var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
             var endTime = new DateTime(2021, 1, 1, 11, 0, 0);
             var carPark = CarParkConfig.PlazaSingapuraCarPark;
@@ -132,7 +138,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfIts2Hours() {
+        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfIts2Hours()
+        {
             var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
             var endTime = new DateTime(2021, 1, 1, 12, 0, 0);
             var carPark = CarParkConfig.PlazaSingapuraCarPark;
@@ -141,7 +148,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsOneWeekdayAndOneWeekend() {
+        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsOneWeekdayAndOneWeekend()
+        {
             /*
                 10-1100: 1.95
                 1100-17:59: 7*4*0.55 = 15.40
@@ -161,7 +169,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsOneWeekdayAndTwoWeekend() {
+        public void ShouldReturnCorrectFeeForCalculateParkingFeeIfItsOneWeekdayAndTwoWeekend()
+        {
             var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
             var endTime = new DateTime(2021, 1, 3, 12, 0, 0);
             var carPark = CarParkConfig.PlazaSingapuraCarPark;
@@ -170,7 +179,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void ShouldReturnCorrectFeeForCalculateParkingFeeForMotorcycle() {
+        public void ShouldReturnCorrectFeeForCalculateParkingFeeForMotorcycle()
+        {
             var startTime = new DateTime(2021, 1, 1, 10, 0, 0);
             var endTime = new DateTime(2021, 1, 1, 12, 0, 0);
             var carPark = CarParkConfig.PlazaSingapuraCarPark;
@@ -179,7 +189,8 @@ namespace ParkingFeeCalculator.Tests.Services
         }
 
         [Fact]
-        public void PlazaSingapuraShouldBeTheLowest() {
+        public void PlazaSingapuraShouldBeTheLowest()
+        {
             var startTime = new DateTime(2021, 1, 1, 0, 0, 0);
             var endTime = new DateTime(2021, 1, 1, 23, 59, 0);
             var expectedFeeForPlazaSingapura = 42.6m;
@@ -187,7 +198,7 @@ namespace ParkingFeeCalculator.Tests.Services
             Assert.Equal(expectedFeeForPlazaSingapura, result);
 
             var expectedFeeForOrchardCentral = 53.06m;
-            result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car,  CarParkConfig.OrchardCentralCarPark);
+            result = _service.CalculateParkingFee(startTime, endTime, VehicleType.Car, CarParkConfig.OrchardCentralCarPark);
             Assert.Equal(expectedFeeForOrchardCentral, result);
 
             var expecteFeeForTSC = 58.46m;

@@ -18,15 +18,12 @@ namespace ParkingFeeCalculator.Models.FeeRuleCalculators
             if (actualStartTime < this.StartTime && actualEndTime < this.StartTime ||
                 actualEndTime > this.EndTime && actualStartTime > this.EndTime)
             {
-                return new FitResult { IsFit = false };
+                return new FitResult(false);
             }
 
-            return new FitResult
-            {
-                IsFit = true,
-                StartTime = actualStartTime > this.StartTime ? actualStartTime : this.StartTime,
-                EndTime = actualEndTime < this.EndTime ? actualEndTime : this.EndTime
-            };
+            return new FitResult(actualStartTime > this.StartTime ? actualStartTime : this.StartTime,
+                                 actualEndTime < this.EndTime ? actualEndTime : this.EndTime,
+                                 true);
         }
 
         public virtual decimal CalculateCost(FitResult fitResult)

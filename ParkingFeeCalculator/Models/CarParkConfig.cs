@@ -7,14 +7,14 @@ namespace ParkingFeeCalculator.Models
         private static readonly FixedFirstXMinutesRuleCalculator plazaSingapuraCarWeekday0to1759 =
             new FixedFirstXMinutesRuleCalculator(new TimeOnly(0, 0), new TimeOnly(17, 59), 60, 15, 1.95m, 0.55m);
         private static readonly FixedFeePerEntryRuleCalculator plazaSingapuraCarWeekday18to2359 =
-            new FixedFeePerEntryRuleCalculator(new TimeOnly(18, 00), new TimeOnly(23, 59), 3.25m);
+            new FixedFeePerEntryRuleCalculator(new TimeOnly(18, 0), new TimeOnly(23, 59), 3.25m);
 
         private static readonly FixedFeePerXMinutesRuleCalculator plazaSingapuraCarWeekendPH0to0259 =
             new FixedFeePerXMinutesRuleCalculator(new TimeOnly(0, 0), new TimeOnly(2, 59), 15, 0.55m);
         private static readonly FixedFirstXMinutesRuleCalculator plazaSingapuraCarWeekendPH03to1759 =
             new FixedFirstXMinutesRuleCalculator(new TimeOnly(3, 0), new TimeOnly(17, 59), 120, 15, 3.25m, 0.55m);
         private static readonly FixedFeePerEntryRuleCalculator plazaSingapuraCarWeekend18to2359 =
-            new FixedFeePerEntryRuleCalculator(new TimeOnly(18, 00), new TimeOnly(23, 59), 3.25m);
+            new FixedFeePerEntryRuleCalculator(new TimeOnly(18, 0), new TimeOnly(23, 59), 3.25m);
 
         private static readonly FixedFeePerEntryRuleCalculator plazaSingapuraMotorcyclePerEntry =
             new FixedFeePerEntryRuleCalculator(new TimeOnly(0, 0), new TimeOnly(23, 59), 1.3m);

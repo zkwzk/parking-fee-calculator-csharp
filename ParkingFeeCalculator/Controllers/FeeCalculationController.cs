@@ -19,7 +19,8 @@ namespace ParkingFeeCalculator.Controllers
         public ActionResult<CarParkFee> GetLowestCarpark(DateTime startTime, DateTime endTime, VehicleType vehicleType)
         {
             List<CarParkFee> carParkFees = new List<CarParkFee>();
-            foreach(var carPark in CarParkConfig.CarParks) {
+            foreach (var carPark in CarParkConfig.CarParks)
+            {
                 carParkFees.Add(new CarParkFee(carPark.Name, _service.CalculateParkingFee(startTime, endTime, vehicleType, carPark)));
             }
 

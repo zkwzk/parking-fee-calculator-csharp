@@ -11,4 +11,4 @@ namespace ParkingFeeCalculator.Models
             this.Fee = fee;
         }
     }
-} 
+}
