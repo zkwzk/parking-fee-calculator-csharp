@@ -66,6 +66,9 @@ PARKING-FEE-CALCULATOR-CSHARP
 
 1. install C# Dev Kit extension(https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
 2. install .net install tool(https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.vscode-dotnet-runtime)
+3. install the .net 8.x SDK, press `cmd+shift+p` then `install New .Net SDK`
+![install sdk](./install_sdk.png)
+
 
 ## Build
 
