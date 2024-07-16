@@ -23,12 +23,16 @@ PARKING-FEE-CALCULATOR-CSHARP
 │   ├── Controllers
 │   │   └── FeeCalculationController.cs
 │   ├── Models
+│   │   └── CarPark.cs
+│   │   └── CarParkConfig.cs
+│   │   └── CalculateDaysResult.cs
+│   │   └── CarParkFee.cs
+│   │   └── FitResult.cs
 │   │   └── FeeRuleCalculators
-|   │       └── FixedFeePerEntryRuleCalculator.cs
-|   │       └── FixedFeePerXMinutesRuleCalculator.cs
-|   │       └── FixedFirstXMinutesRuleCalculator.cs
-|   │       └── RuleCalculatorBase.cs
-│   │   └── ... other models
+│   │       └── FixedFeePerEntryRuleCalculator.cs
+│   │       └── FixedFeePerXMinutesRuleCalculator.cs
+│   │       └── FixedFirstXMinutesRuleCalculator.cs
+│   │       └── RuleCalculatorBase.cs
 │   ├── Services
 │   │   └── FeeCalculationService.cs
 │   │   └── IFeeCalculationService.cs
@@ -47,13 +51,18 @@ PARKING-FEE-CALCULATOR-CSHARP
 
 - `Program.cs`: this is the application file to run it as the asp.net web api, and the place to register the dependency injection containers
 - `Controllers/FeeCalculationController.cs`: This file exports a class `FeeCalculationController` which has a method `GetLowestCarpark` that handles the `/api/feeCalculator/getLowestCarpark` route of the application and returns the lowest carpark fee.
-- `Models/FeeRuleCalculators/RuleCalculatorBase.cs`: This file  implements the `IsFit` method, which returns the time period that falls within the ruleset, or a false result if the inputted time period does not fall within the ruleset at all.
-- `Models/FeeRuleCalculators/FixedFeePerEntryRuleCalculator.cs`: This file defines the ruleset for which there is a fixed fee per entry for the time period defined in the ruleset.
-- `Models/FeeRuleCalculators/FixedFeePerXMinutesRuleCalculator.cs`: This file defines the ruleset for which there is a fixed fee per X minutes for the time period defined in the ruleset. Each block will be rounded up (i.e. if X=15, if the parking duration is 50minutes, it will be counted as 4 blocks of X)
-- `Models/FeeRuleCalculators/FixedFirstXMinutesRuleCalculator.cs`: This file defines the ruleset for which there is a fixed fee for the first X minutes, and thereafter the remaining time is charged for another fixed fee per Y minutes. Similarly, each block will be rounded up. (i.e. if X=60 and Y=15, if the parking duration is 110minutes the parking charge will be xFee + 4 \* yFee).
-- `Services/IFeeCalculationService.cs`: This is the interface which include a `CalculateParkingFee` method, to calculate the parking fee based on the `startTime` `endTime` `vehicleType` and `carPark`
-- `Services/FeeCalculationService.cs`: This implements the IFeeRuleCalculator interface
-- `Utilities/DateTimeUtility.cs`: This file provide an extension method `ToTimeOnly()` for the `DateTime` type to convert the `DateTime` the time part to the `TimeOnly` type
+- `Models/CarPark.cs`: this is the model for the carpark fee rule, including the fee rule calculator for cars in weekday and weekend, and the fee rule calculator for motorcycle
+- `Models/CarParkConfig.cs`: this is the configuration for the 3 carparks
+- `Models/CalculateDaysResult.cs`: this is the model for `CalculateDays` method in `FeeCalculationService` class, it include the startTime and endTime for that day, for example, if a car entry the carpark at `1st Jan 1pm`, exit the carpark at `2nd Jan 3am`, in total there will be two days, then the startTime for the first day will be `1:00pm`, endTime will be `11:59pm`, the startTime for the second day will be `0:0am`, endTime will be `3:00am`
+- `Models/CarParkFee.cs`: includes the carpark name and fee
+- `Models/FitResult.cs`: this is the model for the result of `IsFit` method in `RuleCalculatorBase` class 
+- `Models/FeeRuleCalculators/RuleCalculatorBase.cs`: this file  implements the `IsFit` method, which returns the time period that falls within the ruleset, or a false result if the inputted time period does not fall within the ruleset at all.
+- `Models/FeeRuleCalculators/FixedFeePerEntryRuleCalculator.cs`: this file defines the ruleset for which there is a fixed fee per entry for the time period defined in the ruleset.
+- `Models/FeeRuleCalculators/FixedFeePerXMinutesRuleCalculator.cs`: this file defines the ruleset for which there is a fixed fee per X minutes for the time period defined in the ruleset. Each block will be rounded up (i.e. if X=15, if the parking duration is 50minutes, it will be counted as 4 blocks of X)
+- `Models/FeeRuleCalculators/FixedFirstXMinutesRuleCalculator.cs`: this file defines the ruleset for which there is a fixed fee for the first X minutes, and thereafter the remaining time is charged for another fixed fee per Y minutes. Similarly, each block will be rounded up. (i.e. if X=60 and Y=15, if the parking duration is 110minutes the parking charge will be xFee + 4 \* yFee).
+- `Services/IFeeCalculationService.cs`: this is the interface which include a `CalculateParkingFee` method, to calculate the parking fee based on the `startTime` `endTime` `vehicleType` and `carPark`
+- `Services/FeeCalculationService.cs`: this implements the IFeeRuleCalculator interface
+- `Utilities/DateTimeUtility.cs`: this file provide an extension method `ToTimeOnly()` for the `DateTime` type to convert the `DateTime` the time part to the `TimeOnly` type
 - `Utilities/DecimalUtility.cs`: This file provide an extension method `ToTwoDecimalPlaces()` for the `decimal` type to fix it to 2 decimal places
 
 ## Class Diagram
