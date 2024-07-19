@@ -1,3 +1,4 @@
+using ParkingFeeCalculator.Models;
 using ParkingFeeCalculator.Models.FeeRuleCalculators;
 
 namespace ParkingFeeCalculator.Tests.Models.FeeRuleCalculators
@@ -18,9 +19,8 @@ namespace ParkingFeeCalculator.Tests.Models.FeeRuleCalculators
         {
             var actualStartTime = new TimeOnly(10, 0);
             var actualEndTime = new TimeOnly(12, 1);
-            var result = feeCalculator.IsFit(actualStartTime, actualEndTime);
-            Assert.True(result.IsFit);
-            Assert.Equal(ruleXMinutesFee + ruleYMinutesFee, feeCalculator.CalculateCost(result));
+            var fitResult = new FitResult(actualStartTime, actualEndTime, true);
+            Assert.Equal(ruleXMinutesFee + ruleYMinutesFee, feeCalculator.CalculateCost(fitResult));
         }
 
         // task #1
